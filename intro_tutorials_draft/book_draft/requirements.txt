@@ -1,0 +1,12 @@
+jupyter-book
+matplotlib
+numpy
+yt>4.2
+h5py
+netcdf4
+yt_aspect 
+yt_xarray
+xarray
+aglio
+
+
