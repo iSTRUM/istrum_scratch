@@ -9,7 +9,9 @@ This is a draft of a jupyter-book introducing some python packages in the contex
 jupyter-book build book_draft
 ```
 
-check the rendered versions in `book_draft/_build/`: 
+note: if you've previously built and have since updated chapters, you may need to clear out the old builds first.
+
+check the rendered versions in `book_draft/_build/` and open `book_draft/_build/html/index.html` in a browser 
 
 ## hosting the book 
 
