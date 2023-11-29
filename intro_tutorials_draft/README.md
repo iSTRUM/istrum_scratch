@@ -2,6 +2,11 @@
 
 This is a draft of a jupyter-book introducing some python packages in the context of transient rheology, part of the iSTRUM broader impacts efforts. 
 
+## requirements
+
+```
+pip install -r book_draft/requirements.txt
+```
 
 ## building the book 
 
