@@ -3,7 +3,8 @@
 % - unrelaxed moduli and density calculated with Abers and Hacker for a rock
 %   composition of 90% Forsterite, 10% Fayalite (by volume)
 % - relaxed properties calculated with the VBRc
-% - based on `rockvelcalculate.m` from Abers and Hacker
+% - this script is based on `rockvelcalculate.m` from Abers and Hacker, modified for
+%   a wider range of temperature and pressure and then fed into the VBRc.
 %
 % Setup: 
 % - installation of the vbrc, path set with `vbrdir` environment variable 
