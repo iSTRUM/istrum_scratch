@@ -48,6 +48,8 @@ G = zeros(size(T_K));
 K = zeros(size(T_K));
 rho = zeros(size(T_K));
 
+% for each P,T use Abers Hacker, ah16_rockvel to calculate unrelaxed moduli and 
+% density at P,T.
 for i_T = 1:nT
     for i_P = 1:nP
         tt = T_K(i_P, i_T)-273.;  %deg C
