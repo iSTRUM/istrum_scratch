@@ -19,3 +19,7 @@ Are you brand new to Python? There are many resources:
 * add
 * more
 * links
+
+While this book aims to introduce scientific concepts about transient rheology, it also aims to introduce Python packages
+from the Open Source Scientific Python ecosystem as well as to introduce some more general programming princples that are 
+not frequently covered in a typical geoscience curriculum.
