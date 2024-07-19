@@ -1,4 +1,4 @@
-# 01: Introduction to Transient Rheology
+# Introduction to Transient Rheology
 
 The earth deforms over many timescales: plate tectonics, driven by mantle convection, occurs over millions to billions 
 of years, while seismic waves pass through the earth on the order of seconds to minutes. While these 
@@ -55,21 +55,3 @@ $$
 J(t) / J_u = \left (1 + \Gamma'(t) + \frac{t}{\tau_m} \right)
 $$
 
-When $\Gamma'(t)=0$, 
-
-```python
-from sympy import symbols
-from sympy.plotting import plot
-import unyt
-t = symbols('t')
-tau_m_values = unyt.unyt_array([1e3, 1e4, 1e5], 'years').to('s')
-plots = []
-for tau_m in tau_m_values:
-    J_t = 1 + t / tau_m
-    plots.append(plot(J_t, show=False))
-
-for itau in range(2, len(tau_m_values)):
-    plots[0].append(plots[itau][0])
-plots[0]    
-plots[0].show()
-```
