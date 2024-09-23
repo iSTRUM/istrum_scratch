@@ -1,4 +1,4 @@
-## Building a Python class inheritance model for the phenomelogical models 
+## Building a Python class inheritance model for the phenomenological models 
 
 The form of the base creep function lends itself well to an object-oriented design. 
 In this chapter, we'll identify the common characteristics of the various 
@@ -155,10 +155,10 @@ class MaxwellModel(MaterialModel):
         return self.Ju * (1 + t / self.tau_m)     
     
     def J1_w(self, w):
-        pass     
-        
+        return self.Ju
+
     def J2_w(self, w):
-        pass 
+        return self.Ju / (w * self.tau_m)
 ```
 
 And that's all! 
@@ -179,8 +179,11 @@ class AndradeModel(MaterialModel):
         self.alpha = alpha 
      
 ```
-Now let's add on our `J_t`, `J1_w` and `J2_w` defitions for `AndradeModel`:
+Now let's add on our `J_t`, `J1_w` and `J2_w` definitions for `AndradeModel`:
 ```python 
+from scipy.special import gamma
+import numpy as np
+
 class AndradeModel(MaterialModel):
      
     def __init__(self, Ju, tau_m, beta=1e-5, alpha=1./3):
@@ -192,11 +195,71 @@ class AndradeModel(MaterialModel):
         return self.Ju + self.beta * t**self.alpha + self.Ju * t / self.tau_m
     
     def J1_w(self, w):
-        pass     
-        
+        alf = self.alpha
+        J_fac = 1 + self.beta * gamma(1+alf) * np.cos(alf * np.pi /2) / (w**alf)
+        return self.Ju * J_fac
+
     def J2_w(self, w):
-        pass 
+        alf = self.alpha
+        J_fac = 1. / (w * self.tau_m) + self.beta * gamma(1+alf)*np.sin(alf*np.pi/2)/(w**alf)
+        return self.Ju * J_fac
 ```
+#### Side note on dependencies
+
+In the above `AndradeModel` implementation, we make use of the gamma function implementation 
+from `scipy` as well as trig functions from `numpy`. To do so, the import statements are placed above
+the class definition -- if we were writing our classes in a module on disk, those imports 
+would go up top at the start of the file following standard Python style guidelines, which generally recommend
+placing all imports at the start of a file. While it is generally good practice to place your imports at the 
+top of your file, there are some cases where it benefits performance or user experience to place imports within 
+a function. 
+
+For example, if you expected the above `AndradeModel` to be used infrequently, you could move the scipy import to 
+within the functions that need it:
+
+```python 
+    def J1_w(self, w):
+        from scipy.special import gamma
+        alf = self.alpha
+        J_fac = 1 + self.beta * gamma(1+alf) * np.cos(alf * np.pi /2) / (w**alf)
+        return self.Ju * J_fac
+
+    def J2_w(self, w):
+        from scipy.special import gamma
+        alf = self.alpha
+        J_fac = 1. / (w * self.tau_m) + self.beta * gamma(1+alf)*np.sin(alf*np.pi/2)/(w**alf)
+        return self.Ju * J_fac
+```
+Having the import within the function will delay the import of those libraries until the functionality is actually needed. 
+And uses who never use the `AndradeModel` will not incur any of the cost of loading in another library. Additionally, when one 
+of these functions is called for the first time, the import will load in the libraries and they will remain imported in the 
+user's Python session, so subsequent calls to the function will not have to re-import. 
+
+In addition to potentially saving on load times, this design would allow you to utilize `scipy` as an 
+optional dependency, so that users only need to install scipy if they plan on using these functions. To do that you 
+would need to adjust your package's metadata and also help the user out a bit -- the simplest approach is to add some 
+error handling: 
+
+```python 
+    def J1_w(self, w):
+        try: 
+            from scipy.special import gamma
+        except ImportError:
+            raise ImportError("This functionality requires scipy, install it with: pip install scipy")
+        alf = self.alpha
+        J_fac = 1 + self.beta * gamma(1+alf) * np.cos(alf * np.pi /2) / (w**alf)
+        return self.Ju * J_fac
+
+    def J2_w(self, w):
+        try: 
+            from scipy.special import gamma
+        except ImportError:
+            raise ImportError("This functionality requires scipy, install it with: pip install scipy")
+        alf = self.alpha
+        J_fac = 1. / (w * self.tau_m) + self.beta * gamma(1+alf)*np.sin(alf*np.pi/2)/(w**alf)
+        return self.Ju * J_fac
+```
+For the remaining examples, we'll keep it simple and keep the imports up top. 
 
 ### Using the models 
 So let's actually put our models to use!
