@@ -10,3 +10,9 @@ chapters:
   - file: chapter_00_intro/01_environment_setup.md
   - file: chapter_00_intro/02_test.ipynb
 - file: chapter_01_transient_rheology_intro/index.md
+  sections:
+  - file: chapter_01_transient_rheology_intro/01_phenomenological_models.md
+  - file: chapter_01_transient_rheology_intro/02_frequency_domain.md
+  - file: chapter_01_transient_rheology_intro/03_linking_timescales.md
+  - file: chapter_01_transient_rheology_intro/04_building_a_python_model.md
+  - file: chapter_01_transient_rheology_intro/05_building_a_python_package.md
