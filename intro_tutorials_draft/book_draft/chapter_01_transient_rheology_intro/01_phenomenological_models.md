@@ -1,8 +1,8 @@
-## The Phenomenal Phenomenological Models 
+# The Phenomenal Phenomenological Models 
 
 
 
-### Maxwell Model
+## Maxwell Model
 
 When $\Gamma'(t)=0$, 
 
@@ -23,8 +23,8 @@ plots[0]
 plots[0].show()
 ```
 
-### Andrade Model 
+## Andrade Model 
 
-### Burgers Model 
+## Burgers Model 
 
-### Zener Model
+## Zener Model

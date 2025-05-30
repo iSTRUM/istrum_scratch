@@ -1,7 +1,6 @@
-## Building a Python class inheritance model for the phenomenological models
+# Building a Python class inheritance model for the phenomenological models
 
-In this chapter, we'll walk through the steps to take our set of phenomenological Python classes 
-and create a Python **package**. 
+In this chapter, we'll walk through the steps to take our set of phenomenological Python classes and create a Python **package**. 
 
 For more on the details of Python packaging, check out the [Scientific Python Library Development Guide ](https://learn.scientific-python.org/development/).
 
@@ -18,7 +17,7 @@ $ pyenv virtualenv 3.10.12 phenom_dev
 $ pyenv activate phenom_dev
 ```
 
-### cookiecutters
+## cookiecutters
 
 ```commandline
 $ pip install cookiecutter
@@ -37,7 +36,7 @@ $ ls
 LICENSE		README.md	docs		noxfile.py	pyproject.toml	src		tests
 ```
 
-### add dependencies 
+## add dependencies 
 
 in `pyproject.toml`:
 
@@ -46,7 +45,7 @@ dependencies = ["numpy",
                 "scipy",]
 ```
 
-### adding code 
+## adding code 
 
 Open a new file, `src/deformation_models/main.py` and copy in the Python classes for the 
 phenomenological models. 
@@ -72,7 +71,7 @@ from deformation_models.main import Andrade_Model
 andrade = Andrade_Model(...)  
 ```
 
-### installing a development version
+## installing a development version
 
 We're now ready to install a development version! Normally, you could jump right into 
 an editable isntall with `pip install -e .`, but remember how we selected Y for that 
@@ -122,7 +121,7 @@ tests/test_package.py .                                                         
 ============================================================================== 1 passed in 2.39s ==============================================================================
 ```
 
-### push up initial code 
+## push up initial code 
 
 Create the github repo, don't add readme or license file, make it public. 
 
@@ -200,6 +199,6 @@ From github.com:iSTRUM/deformation_models
  * [new branch]      main       -> upstream/main
  ```
 
-## publishing to pypi 
+# publishing to pypi 
 
-The final step of sharing your package is to publish it to a package index. 
+The final step of sharing your package is to publish it to a package repository.  

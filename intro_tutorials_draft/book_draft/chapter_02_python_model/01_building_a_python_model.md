@@ -1,10 +1,10 @@
-## Building a Python class inheritance model for the phenomenological models 
+# Building a Python class inheritance model for the phenomenological models 
 
 The form of the base creep function lends itself well to an object-oriented design. 
 In this chapter, we'll identify the common characteristics of the various 
 phenomenological models and construct an object-based data model in Python. 
 
-### Building the base model
+## Building the base model
 
 In the previous chapters, we described the following phenomelogical models:
 
@@ -142,9 +142,9 @@ class MaterialModel(abc.ABC):
         return self.Q_w_approx(w) * Qfac
 ```
 
-### Inheriting from the base model
+## Inheriting from the base model
 
-#### Maxwell
+### Maxwell
 So now that we have our base class, we can write versions of it for every
 mechanical model. The maxwell model
 
@@ -168,7 +168,7 @@ accept the additional $\beta$ and $\alpha$ parameters, but in order to avoid cop
 code, we will call the "parent" or "base" class's `__init__` method by using the `super()`
 class call, which will identify the parent class for you:
 
-#### Andrade
+### Andrade
 
 ```python 
 class AndradeModel(MaterialModel):
@@ -204,7 +204,8 @@ class AndradeModel(MaterialModel):
         J_fac = 1. / (w * self.tau_m) + self.beta * gamma(1+alf)*np.sin(alf*np.pi/2)/(w**alf)
         return self.Ju * J_fac
 ```
-#### Side note on dependencies
+
+### Side note on dependencies
 
 In the above `AndradeModel` implementation, we make use of the gamma function implementation 
 from `scipy` as well as trig functions from `numpy`. To do so, the import statements are placed above

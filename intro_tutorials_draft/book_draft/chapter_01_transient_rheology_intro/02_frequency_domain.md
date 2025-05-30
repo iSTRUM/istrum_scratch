@@ -1,1 +1,5 @@
-## Phenomelogical Models in the Frequency Domain
+# Phenomelogical Models in the Frequency Domain
+
+Attenuation... 
+
+Transformations... 

@@ -1,3 +1,3 @@
-# 00: Introduction to this book 
+# Introduction to this tutorial 
 
 words yo

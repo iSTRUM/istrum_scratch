@@ -16,8 +16,7 @@ The modulus, $M(t)$, describes the response of a rock to an applied stress. In t
 case, the modulus is anologous to the spring constant of a spring: given an applied stress, a spring stretches 
 effectively instananeously to a length determined by the spring constant. In the case of 
 a transient rheology, the modulus is a time dependent function, $M(t)$. Rather than working with the 
-modulus, $M$, however, it is common to instead think in terms of the **compliance**, which is 
-simply the inverse of the modulus:
+modulus, $M$, however, it is common to instead think in terms of the **compliance**, which is the inverse of the modulus:
 
 $$
 J(t) = \frac{1}{M(t)} 
