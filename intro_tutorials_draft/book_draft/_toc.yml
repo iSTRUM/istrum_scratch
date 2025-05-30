@@ -6,7 +6,14 @@ root: index
 chapters:
 - file: chapter_00_intro/index.md
   sections:
-  - file: chapter_00_intro/00_requirements.md
   - file: chapter_00_intro/01_environment_setup.md
   - file: chapter_00_intro/02_test.ipynb
-- file: chapter_01_timescales_of_deformation/index.md
+- file: chapter_01_transient_rheology_intro/index.md
+  sections:
+  - file: chapter_01_transient_rheology_intro/01_phenomenological_models.md
+  - file: chapter_01_transient_rheology_intro/02_frequency_domain.md
+  - file: chapter_01_transient_rheology_intro/03_linking_timescales.md
+- file: chapter_02_python_model/index.md
+  sections:
+  - file: chapter_02_python_model/01_building_a_python_model.md
+  - file: chapter_02_python_model/02_building_a_python_package.md
