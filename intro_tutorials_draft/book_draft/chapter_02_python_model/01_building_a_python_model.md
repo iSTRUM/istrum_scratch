@@ -15,8 +15,7 @@ In the previous chapters, we described the following phenomelogical models:
 * extended burgers 
 
 You'll notice that for all of these, there are common quantities that we set or 
-calculated and plotted repeatedly. Looking just at the general time dependent creep 
-function, 
+calculated and plotted repeatedly. Looking just at the general time dependent creep function, 
 
 $$
 J(t) = J_u (1 + \Gamma(t) / J_u + \frac{t}{\tau_m}
@@ -119,7 +118,7 @@ class MaterialModel(abc.ABC):
     
     def J_w(self, w):
         """The full complex compliance"""
-        return np.complex(self.J1_w(w), self.J2_w(w))
+        return complex(self.J1_w(w), self.J2_w(w))
         
     def M_w(self, w):
         """The full complex modulus"""
@@ -146,7 +145,7 @@ class MaterialModel(abc.ABC):
 
 ### Maxwell
 So now that we have our base class, we can write versions of it for every
-mechanical model. The maxwell model
+mechanical model. The maxwell model is simply
 
 ```python 
 class MaxwellModel(MaterialModel):
@@ -161,14 +160,27 @@ class MaxwellModel(MaterialModel):
         return self.Ju / (w * self.tau_m)
 ```
 
-And that's all! 
+And that's all! Since the base class defines all the other properties we may want, we don't need to re-define them here and once you create an instance: 
 
-For andrade, we also need to modify the initialization routine, `__init__` to 
+```python
+Ju = 65 * 1e9; 
+tau_m = 1e3 * 3600 * 24 * 365
+maxwell = MaxwellModel(Ju, tau_m)
+```
+
+you can calculate all the other properties, for example the full complex modulus at 0.01 Hz (or a period of 100 s)
+
+```python
+print(maxwell.M_w(2 * np.pi * 0.01))
+```
+
+### Andrade
+
+For the Andrade model, we also need to modify the initialization routine, `__init__` to 
 accept the additional $\beta$ and $\alpha$ parameters, but in order to avoid copy/pasting
 code, we will call the "parent" or "base" class's `__init__` method by using the `super()`
 class call, which will identify the parent class for you:
 
-### Andrade
 
 ```python 
 class AndradeModel(MaterialModel):
@@ -262,10 +274,57 @@ error handling:
 ```
 For the remaining examples, we'll keep it simple and keep the imports up top. 
 
-### Using the models 
+### The rest of the models
+
+The Standard Linear Solid (SLS, aka Zener model) and Burgers Model follow similarly to the Andrade subclass:
+
+```python
+class SLS(MaterialModel):
+    # zener model
+    def __init__(self, Ju_1, tau_m, Ju_2):
+        super().__init__(Ju_1, tau_m)
+        self.Ju_2 = Ju_2
+
+    def J_t(self, t):
+        return self.Ju + self.Ju_2 * (1 - np.exp(-t / self.tau_m))
+
+    def _w_tau_fac(self, w):
+        return 1 + (w * self.tau_m) ** 2
+
+    def J1_w(self, w):
+        return self.Ju + self.Ju_2 / self._w_tau_fac(w)
+
+    def J2_w(self, w):
+        return self.Ju_2 * w * self.tau_m / self._w_tau_fac(w)
+```
+
+
+```python
+class Burgers(MaterialModel):
+    def __init__(self, Ju1, tau_m1, Ju2, tau_m2):
+        super().__init__(Ju1, tau_m1)
+        self.Ju_2 = Ju2
+        self.tau_m_2 = tau_m2
+
+    def J_t(self, t):
+        return self.Ju * (1 + t / self.tau_m) + self.Ju_2 * (
+            1 - np.exp(t / self.tau_m_2)
+        )
+
+    def J1_w(self, w):
+        return self.Ju + self.Ju_2 / (1 + (self.tau_m_2 * w) ** 2)
+
+    def J2_w(self, w):
+        return self.Ju * 1 / (self.tau_m * w) + self.tau_m_2 * w / (
+            1 + (self.tau_m_2 * w) ** 2
+        )
+```
+
+## Using the models 
+
 So let's actually put our models to use!
 
-In this example, we'll assume that you've written the final models in a Pytho module (explain this). 
+In this example, we'll assume that you've written the final models in a file called `material_models.py` in your current working directory. You could instead be working in a Jupyter notebook and defined all the above classes in cells that you've executed (in which case, you can skip the import in the following code and refer to the models directly) Python module (explain this). 
 
 ```python
 import material_models as mm 
@@ -279,12 +338,3 @@ tau_m_2 = tau_m * 0.5
 zener = mm.ZenerModel(Ju, tau_m, tau_m_2)
 ```
 
-### visualizing the Material model inheritance structure 
-
-While the above case is not **too** complicated, some codebases have very 
-expansive class structures that are hard to get a handle on if you're new to the 
-code. 
-
-```python 
-import inheritance_explorer 
-```

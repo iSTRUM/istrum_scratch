@@ -6,7 +6,6 @@ root: index
 chapters:
 - file: chapter_00_intro/index.md
   sections:
-  - file: chapter_00_intro/00_requirements.md
   - file: chapter_00_intro/01_environment_setup.md
   - file: chapter_00_intro/02_test.ipynb
 - file: chapter_01_transient_rheology_intro/index.md

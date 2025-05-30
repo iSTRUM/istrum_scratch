@@ -1,3 +1,3 @@
 # Welcome
 
-Overview... 
+The aim of this tutorial is to provide a gentle introduction to some concepts of transient rheology in Earth materials and describe an object-oriented approach to computing material properties (based on phenomenological models) with Python. The [Introduction to this tutorial](./chapter_00_intro/index.md) describes pre-requisites for both domain knowledge and software development. [](./chapter_01_transient_rheology_intro/index.md) is a brief introduction to theory of transient rheology and description of real materials with phenomenological spring-dashpot models while [](./chapter_02_python_model/index.md) describes the construction of an object-oriented, Python-based model for calculating material properties.
